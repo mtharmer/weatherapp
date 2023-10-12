@@ -1,0 +1,5 @@
+= form_with url: '/forecast/search', method: :get do |form|
+  .input-group.my-3[style='max-width:50rem;']
+    = form.search_field :location, class: 'form-control', placeholder: 'Search a location...'
+    .input-group-append
+      = form.submit 'Search', class: 'btn btn-outline-primary'

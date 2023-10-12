@@ -1,0 +1,5 @@
+.container
+  = render partial: 'search'
+  - if @forecast.present?
+    p We made it!
+    p = @forecast.temperature
