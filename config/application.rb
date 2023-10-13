@@ -35,5 +35,7 @@ module Weatherapp
     config.generators.system_tests = nil
 
     config.generators.template_engine = :slim
+
+    config.autoload_paths += %W[#{config.root}/lib]
   end
 end
