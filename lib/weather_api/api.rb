@@ -6,8 +6,8 @@ require 'net/http'
 module WeatherApi
   module Api
     class << self
-      BASE_URI = ENV['WEATHER_API_URL']
-      API_KEY = ENV['WEATHER_API_KEY']
+      BASE_URI = ENV.fetch('WEATHER_API_URL', nil)
+      API_KEY = ENV.fetch('WEATHER_API_KEY', nil)
       def get_forecast(location)
         url = URI("#{BASE_URI}forecast")
         url.query = URI.encode_www_form({ location: location, apikey: API_KEY })

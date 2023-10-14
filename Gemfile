@@ -58,6 +58,7 @@ group :development, :test do
   gem "rubocop", "~> 1.57"
   gem "rubocop-rails", "~> 2.21"
   gem "rubocop-rspec", "~> 2.24"
+  gem "slim_lint", "~> 0.24.0"
 end
 
 group :development do
@@ -72,3 +73,5 @@ group :development do
 end
 
 gem "slim-rails", "~> 3.6"
+
+gem "devise", "~> 4.9"
