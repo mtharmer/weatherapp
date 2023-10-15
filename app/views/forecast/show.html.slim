@@ -1,4 +1,8 @@
 .container
   = render partial: 'search'
   - if @forecast.present?
-    p We made it!
+    h1
+      | Forecast
+  - else
+    p
+      | Select a location above to find a forecast!

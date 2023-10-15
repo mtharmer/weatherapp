@@ -79,3 +79,7 @@ RSpec/Rails/InferredSpecType:
 
 RSpec/ContextWording:
   Enabled: false
+
+Rails/I18nLocaleTexts:
+  Exclude:
+    - spec/**/*
