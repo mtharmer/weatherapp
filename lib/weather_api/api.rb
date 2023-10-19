@@ -8,14 +8,20 @@ module WeatherApi
     class << self
       BASE_URI = ENV.fetch('WEATHER_API_URL', nil)
       API_KEY = ENV.fetch('WEATHER_API_KEY', nil)
-      def get_forecast(location)
+
+      def get_forecast(location = nil)
+        raise ArgumentError, 'Location is required' if location.blank?
+
         url = URI("#{BASE_URI}forecast")
-        url.query = URI.encode_www_form({ location: location, apikey: API_KEY })
-        response_body = get_request(url)
-        format_forecast_data(response_body)
+        url.query = URI.encode_www_form({ location: format_location(location), apikey: API_KEY, units: 'imperial' })
+        format_forecast_data(get_request(url))
       end
 
       private
+
+      def format_location(location)
+        location =~ /^\d{5}$/ ? "#{location} US" : location
+      end
 
       def get_request(url)
         http = Net::HTTP.new(url.host, url.port)
@@ -25,6 +31,8 @@ module WeatherApi
         request['accept'] = 'application/json'
 
         response = http.request(request)
+        raise StandardError, 'Something went wrong' if response.code >= '400'
+
         JSON.parse(response.body).deep_transform_keys!(&:underscore)
       end
 
@@ -32,16 +40,19 @@ module WeatherApi
         data.map { |dh| dh.merge!(dh.delete('values')) }
       end
 
-      def translate(data, klass)
-        flat_data = flatten_response_values(data['timelines'][klass])
-        flat_data.map { |item| WeatherApi.const_get(klass.classify).new(item) }
+      def translate_to_class(data, class_name)
+        return [] unless data['timelines'] && data.dig('timelines', class_name)
+
+        flatten_response_values(data['timelines'][class_name]).map do |item|
+          WeatherApi.const_get(class_name.classify).new(item)
+        end
       end
 
       def format_forecast_data(data)
         Forecast.new(
-          minutely: translate(data, 'minutely'),
-          hourly: translate(data, 'hourly'),
-          daily: translate(data, 'daily')
+          minutely: translate_to_class(data, 'minutely'),
+          hourly: translate_to_class(data, 'hourly'),
+          daily: translate_to_class(data, 'daily')
         )
       end
     end

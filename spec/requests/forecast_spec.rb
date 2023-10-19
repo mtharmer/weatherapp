@@ -13,15 +13,32 @@ RSpec.describe 'Forecasts', type: :request do
   end
 
   describe 'GET /forecast/search' do
-    subject { response }
+    context 'valid request' do
+      subject { response }
 
-    before do
-      allow(WeatherApi::Api).to receive(:get_forecast).and_return(WeatherApi::Forecast.new)
-      get '/forecast/search'
+      before do
+        allow(WeatherApi::Api).to receive(:get_forecast).and_return(WeatherApi::Forecast.new)
+        get '/forecast/search'
+      end
+
+      it { is_expected.to have_http_status(:success) }
+      it { is_expected.to render_template('forecast/show') }
+      it { expect(assigns(:forecast).class.name).to eq('WeatherApi::Forecast') }
     end
 
-    it { is_expected.to have_http_status(:success) }
-    it { is_expected.to render_template('forecast/show') }
-    it { expect(assigns(:forecast).class.name).to eq('WeatherApi::Forecast') }
+    context 'invalid request' do
+      subject { response }
+
+      before do
+        allow(WeatherApi::Api).to receive(:get_forecast).and_raise(StandardError.new('Bad stuff'))
+        get '/forecast/search'
+      end
+
+      it { is_expected.to redirect_to(forecast_path) }
+
+      it 'is expected to set a flash alert' do
+        expect(flash[:alert]).to eq 'Bad stuff'
+      end
+    end
   end
 end

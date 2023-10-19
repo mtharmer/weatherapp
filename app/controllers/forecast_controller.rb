@@ -8,5 +8,7 @@ class ForecastController < ApplicationController
   def search
     @forecast = WeatherApi::Api.get_forecast(params[:location])
     render template: 'forecast/show'
+  rescue StandardError => e
+    redirect_to forecast_path, alert: e.message
   end
 end

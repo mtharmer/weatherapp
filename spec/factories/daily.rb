@@ -69,6 +69,10 @@ FactoryBot.define do
     snow_accumulation_max                 { Faker::Number.within(range: 0.0..10.0).round(2) }
     snow_accumulation_min                 { Faker::Number.within(range: 0.0..10.0).round(2) }
     snow_accumulation_sum                 { Faker::Number.within(range: 0.0..10.0).round(2) }
+    snow_depth_avg                        { Faker::Number.within(range: 0.0..2.0).round(1) }
+    snow_depth_max                        { Faker::Number.within(range: 0.0..2.0).round(1) }
+    snow_depth_min                        { Faker::Number.within(range: 0.0..2.0).round(1) }
+    snow_depth_sum                        { Faker::Number.within(range: 0.0..2.0).round(1) }
     snow_intensity_avg                    { Faker::Number.within(range: 0..10) }
     snow_intensity_max                    { Faker::Number.within(range: 0..10) }
     snow_intensity_min                    { Faker::Number.within(range: 0..10) }

@@ -83,3 +83,6 @@ RSpec/ContextWording:
 Rails/I18nLocaleTexts:
   Exclude:
     - spec/**/*
+
+Metrics/ClassLength:
+  CountAsOne: ['array']

@@ -22,6 +22,7 @@ FactoryBot.define do
     sleet_intensity             { Faker::Number.within(range: 0..10) }
     snow_accumulation           { Faker::Number.within(range: 0..10) }
     snow_accumulation_lwe       { Faker::Number.within(range: 0..10) }
+    snow_depth                  { Faker::Number.within(range: 0.0..2.0).round(1) }
     snow_intensity              { Faker::Number.within(range: 0..10) }
     temperature                 { Faker::Number.within(range: -40.0..100.0).round(1) }
     temperature_apparent        { Faker::Number.within(range: -40.0..100.0).round(1) }

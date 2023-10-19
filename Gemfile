@@ -53,6 +53,7 @@ gem "bootsnap", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem "benchmark-ips"
   gem "database_cleaner-active_record", "~> 2.1"
   gem "debug", platforms: %i[mri mingw x64_mingw]
   gem "factory_bot_rails", "~> 6.2"
@@ -65,6 +66,7 @@ group :development, :test do
   gem "shoulda-matchers", "~> 5.3"
   gem "simplecov", "~> 0.22.0"
   gem "slim_lint", "~> 0.24.0"
+  gem "webmock", "~> 3.19"
 end
 
 group :development do
