@@ -3,6 +3,7 @@
   - if @forecast.present?
     h1
       | Forecast
+    = render partial: 'forecast'
   - else
     p
       | Select a location above to find a forecast!

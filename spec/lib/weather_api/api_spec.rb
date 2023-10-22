@@ -42,29 +42,26 @@ RSpec.describe WeatherApi::Api do
 
     context 'request validation' do
       let!(:response_body) { File.open('./spec/fixtures/forecast_response_body.json') }
+      let(:headers) do
+        {
+          'Accept' => 'application/json',
+          'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'Host' => 'api.tomorrow.io',
+          'User-Agent' => 'Ruby'
+        }
+      end
+      let(:request_uri) { "#{base_uri}forecast?apikey=#{api_key}&location=some%20location&units=imperial" }
 
       it 'proceeds when the request is successful' do
-        stub_request(:get, "#{base_uri}forecast?apikey=#{api_key}&location=some%20location&units=imperial")
-          .with(headers: {
-                  'Accept' => 'application/json',
-                  'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-                  'Host' => 'api.tomorrow.io',
-                  'User-Agent' => 'Ruby'
-                })
-          .to_return(status: 200, body: response_body, headers: {})
+        stub_request(:get, request_uri).with(headers: headers).to_return(status: 200, body: response_body, headers: {})
         expect(described_class.get_forecast('some location')).not_to be_nil
       end
 
       it 'raises an error if the request is unsuccessful' do
-        stub_request(:get, "#{base_uri}forecast?apikey=#{api_key}&location=some%20location&units=imperial")
-          .with(headers: {
-                  'Accept' => 'application/json',
-                  'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-                  'Host' => 'api.tomorrow.io',
-                  'User-Agent' => 'Ruby'
-                })
-          .to_return(status: 400, body: response_body, headers: {})
-        expect { described_class.get_forecast('some location') }.to raise_error(StandardError, 'Something went wrong')
+        stub_request(:get, request_uri).with(headers: headers).to_return(status: 400, body: response_body, headers: {})
+        expect { described_class.get_forecast('some location') }.to raise_error(
+          StandardError, 'Something went wrong - the server responded with 400'
+        )
       end
     end
 

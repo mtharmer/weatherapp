@@ -1,0 +1,15 @@
+h2
+  | Hourly
+.accordion.accordion-flush[id='hourlyAccordion']
+  - if @forecast.hourly.is_a? Array
+    - @forecast.hourly.each_with_index do |hour, idx|
+      .accordion-item[data-controller="forecast"]
+        h2.accordion-header[id="heading#{idx}"]
+          button.btn.accordion-button.collapsed[data-action="forecast#expand" data-forecast-target="expandable"]
+            = format_hour(hour.time)
+        .accordion-collapse.collapse[id="collapse#{idx}" data-forecast-target="collapse"]
+          .accordion-body
+            strong = hour.weather_code
+  - else
+    em
+      | Looks like there's no data yet!

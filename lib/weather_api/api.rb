@@ -30,10 +30,10 @@ module WeatherApi
         request = Net::HTTP::Get.new(url)
         request['accept'] = 'application/json'
 
-        response = http.request(request)
-        raise StandardError, 'Something went wrong' if response.code >= '400'
+        res = http.request(request)
+        raise StandardError, "Something went wrong - the server responded with #{res.code}" if res.code >= '400'
 
-        JSON.parse(response.body).deep_transform_keys!(&:underscore)
+        JSON.parse(res.body).deep_transform_keys!(&:underscore)
       end
 
       def flatten_response_values(data)

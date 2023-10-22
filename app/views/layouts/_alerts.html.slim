@@ -1,6 +1,11 @@
-- if notice.present?
-  .alert.alert-primary
-    span = notice
-- if alert.present?
-  .alert.alert-warning
-    span = alert
+div[data-controller="alerts"]
+  - if notice.present?
+    .alert.alert-primary[data-alerts-target="closeable"]
+      button.btn[data-action='alerts#dismiss']
+        | &times;
+      span = notice
+  - if alert.present?
+    .alert.alert-warning[data-alerts-target="closeable"]
+      button.btn[data-action='alerts#dismiss']
+        | &times;
+      span = alert

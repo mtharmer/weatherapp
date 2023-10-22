@@ -7,8 +7,9 @@ class ForecastController < ApplicationController
   # TODO: Modify this with hotwire/turbo to update a partial on the page
   def search
     @forecast = WeatherApi::Api.get_forecast(params[:location])
-    render template: 'forecast/show'
+    render :show
   rescue StandardError => e
+    flash.clear
     redirect_to forecast_path, alert: e.message
   end
 end

@@ -1,0 +1,18 @@
+div[data-controller="forecast"]
+  ul.nav.nav-tabs[id="forecastTabs" role="tablist"]
+    li.nav-item
+      button.nav-link.active[id="minutes" data-forecast-target="btn" data-action="forecast#selectTab"]
+        | Minutes
+    li.nav-item
+      button.nav-link[id="hours" data-forecast-target="btn" data-action="forecast#selectTab"]
+        | Hours
+    li.nav-item
+      button.nav-link[id="days" data-forecast-target="btn" data-action="forecast#selectTab"]
+        | Days
+  .tab-content
+    .tab-pane.show.active[id="minutes" role="tabpanel" data-forecast-target="tab"]
+      = render partial: 'minutes'
+    .tab-pane[id="hours" role="tabpanel" data-forecast-target="tab"]
+      = render partial: 'hours'
+    .tab-pane[id="days" role="tabpanel" data-forecast-target="tab"]
+      = render partial: 'days'

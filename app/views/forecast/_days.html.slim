@@ -1,0 +1,15 @@
+h2
+  | Daily
+.accordion.accordion-flush[id='dailyAccordion']
+  - if @forecast.daily.is_a? Array
+    - @forecast.daily.each_with_index do |day, idx|
+      .accordion-item[data-controller="forecast"]
+        h2.accordion-header[id="heading#{idx}"]
+          button.btn.accordion-button.collapsed[data-action="forecast#expand" data-forecast-target="expandable"]
+            = format_day(day.time)
+        .accordion-collapse.collapse[id="collapse#{idx}" data-forecast-target="collapse"]
+          .accordion-body
+            strong = day.weather_code_max
+  - else
+    em
+      | Looks like there's no data yet!

@@ -1,0 +1,15 @@
+h2
+  | Minutely
+.accordion.accordion-flush[id='hourlyAccordion']
+  - if @forecast.minutely.is_a? Array
+    - @forecast.minutely.each_with_index do |min, idx|
+      .accordion-item[data-controller="forecast"]
+        h2.accordion-header[id="heading#{idx}"]
+          button.btn.accordion-button.collapsed[data-action="forecast#expand" data-forecast-target="expandable"]
+            = format_minute(min.time)
+        .accordion-collapse.collapse[id="collapse#{idx}" data-forecast-target="collapse"]
+          .accordion-body
+            strong = min.weather_code
+  - else
+    em
+      | Looks like there's no data yet!
