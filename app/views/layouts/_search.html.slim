@@ -1,0 +1,5 @@
+= form_with url: location_search_path, method: :get do |form|
+  .input-group.my-1[style='max-width:50rem;']
+    = form.search_field :location, class: 'form-control', placeholder: 'Search a location...'
+    .input-group-append
+      = form.submit 'Search', class: 'btn btn-outline-primary'

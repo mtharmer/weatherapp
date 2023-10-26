@@ -1,0 +1,13 @@
+.container
+  h2.mt-3
+    | Current Weather
+  - if @current.present?
+    em = "Updated at #{format_minute(@current.dt)}"
+    .row
+      .col
+        p = format_long_date @current.dt
+      .col
+        p = format_temp @current.main_temp
+  - else
+    em
+      | Search for your location in the search bar to get weather data

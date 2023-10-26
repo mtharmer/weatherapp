@@ -86,3 +86,6 @@ Rails/I18nLocaleTexts:
 
 Metrics/ClassLength:
   CountAsOne: ['array']
+
+Metrics/MethodLength:
+  CountAsOne: ['array']

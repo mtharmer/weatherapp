@@ -1,0 +1,18 @@
+h5.mt-2
+  | Next Four Days every 3 Hours
+.accordion.accordion-flush[id='hourlyAccordion']
+  - if @forecast.list.is_a? Array
+    - @forecast.list.each_with_index do |hour, idx|
+      - cache hour do
+        - if first_of_day(hour.dt)
+          br
+        .accordion-item[data-controller="forecast"]
+          h2.accordion-header[id="heading#{idx}"]
+            button.btn.accordion-button.collapsed[data-action="forecast#expand" data-forecast-target="expandable"]
+              = format_hour(hour.dt)
+          .accordion-collapse.collapse[id="collapse#{idx}" data-forecast-target="collapse"]
+            .accordion-body
+              = render partial: 'list_item', locals: { hour: hour }
+  - else
+    em
+      | Looks like there's no data yet!

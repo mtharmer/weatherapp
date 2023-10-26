@@ -1,15 +1,19 @@
 # frozen_string_literal: true
 
 class ForecastController < ApplicationController
-  # include WeatherApi::Api
-  def show; end
+  def show
+    return flash[:alert] = I18n.t('nolocation') unless verify_location
 
-  # TODO: Modify this with hotwire/turbo to update a partial on the page
-  def search
-    @forecast = WeatherApi::Api.get_forecast(params[:location])
-    render :show
+    coords = retrieve_lat_lon
+
+    @forecast = forecast_cache(coords[:lat], coords[:lon])
   rescue StandardError => e
-    flash.clear
-    redirect_to forecast_path, alert: e.message
+    flash[:alert] = e.message
+  end
+
+  def forecast_cache(lat, lon)
+    Rails.cache.fetch("#{lat}/#{lon}/forecast", expires_in: 15.minutes) do
+      WeatherApi::Api.get_3_hr_forecast(lat, lon)
+    end
   end
 end

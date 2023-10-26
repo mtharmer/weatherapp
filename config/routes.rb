@@ -6,7 +6,9 @@ Rails.application.routes.draw do
 
   # resources :forecast, only: :show
   get 'forecast',         to: 'forecast#show'
-  get 'forecast/search',  to: 'forecast#search'
+  get 'weather',          to: 'weather#show'
+  get 'location/search',  to: 'location#search'
+  get 'maps',             to: 'map#index'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

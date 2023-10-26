@@ -1,0 +1,14 @@
+.container-fluid[style="width: 70rem; height: 35rem;" data-controller="map"]
+  .dropdown
+    button.btn.btn-outline-primary.dropdown-toggle[type="button" data-bs-toggle="dropdown"]
+      | Weather Layers
+    ul.dropdown-menu[data-bs-target="dropdown"]
+      / - [{id: 'clouds_new', label: 'Clouds'}, {id: 'temp_new', label: 'Temperature'},
+      /   {id: 'precipitation_new', label: 'Precipitation'}, {id: 'pressure_new', label: 'Sea Level Pressure'},
+      /   {id: 'wind_new', label: 'Wind Speed'}].each do |item|
+      - map_types.each do |item|
+        li: button.dropdown-item[data-action="map#overlayMap" data-overlay="#{item[:id]}"] #{item[:label]}
+        / li: button.dropdown-item[data-action="map#overlayMap" data-overlay="temp_new"] Temperature
+  div.mt-2#map[style="width: 100%; height: 100%;"
+                data-map-target="map" data-appid="#{ENV.fetch('WEATHER_API_KEY', '')}"
+                data-lat=session.dig(:location, 'lat') data-lng=session.dig(:location, 'lon')]

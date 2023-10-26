@@ -1,8 +1,6 @@
 .container
-  = render partial: 'search'
+  / = render partial: 'search'
   - if @forecast.present?
-    h1
-      | Forecast
     = render partial: 'forecast'
   - else
     p
